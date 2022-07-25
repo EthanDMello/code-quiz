@@ -1,0 +1,32 @@
+pseudo code for code quiz:
+
+init game and scores
+
+
+FUNCTION startgame
+    start timer
+
+    LOOP ask question
+        IF question right
+        go to next question
+        ELSE minus time
+        go to next question
+
+        IF timer runs out
+        break and end game
+        OR all questions answered
+        break and end game
+    
+    give score
+    option to save initials
+
+play again?
+
+    
+HTML layout:
+
+Body
+    timer
+    question area
+    answer area
+    answered right or wrong.
