@@ -30,3 +30,11 @@ Body
     question area
     answer area
     answered right or wrong.
+
+on start game
+    start timer
+    get and add question 1 to page
+    wait for answer
+    record answer
+    clear page
+    

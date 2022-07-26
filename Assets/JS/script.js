@@ -12,23 +12,29 @@ const question1 = {
 
 const question2 = {
   question: "Question 2",
-  answer1: "toUpperCase()",
-  answer2: "toUpper()",
+  answer1: "answer 1 for question 2()",
+  answer2: "answer 2 for q 3()",
   answer3: "None of the above",
+  userAnswer: "",
+  correctAnswer: "answer1",
 };
 
 const question3 = {
   question: "Question 3",
   answer1: "toUpperCase()",
   answer2: "toUpper()",
-  answer3: "None of the above",
+  answer3: "None answer 3 for q 3 the above",
+  userAnswer: "",
+  correctAnswer: "answer1",
 };
 
 const question4 = {
   question: "question 4",
   answer1: "toUpperCase()",
   answer2: "toUpper()",
-  answer3: "None of the above",
+  answer3: "None number 4 the above",
+  userAnswer: "",
+  correctAnswer: "answer1",
 };
 
 const questionAr = [question1, question2, question3, question4];
@@ -38,6 +44,7 @@ function displayBlock(questions) {
   let el = document.createElement("section");
   //   add question
   el.textContent = questions.question;
+  // console.log("QEUSTION SELECTOR", questions.question);
   questionArea.appendChild(el);
   //   find answers
   const keys = Object.keys(questions);
@@ -57,24 +64,32 @@ function clearQuestion() {
   questionArea.innerHTML = " ";
 }
 
-function displayQuestion(question) {
-  displayBlock(question);
+var i = 0;
+function nextQuestion(question) {
+  console.log(i);
+  displayBlock(question[i]);
   let buttons = document.querySelectorAll("button");
   console.log(buttons);
   buttons.forEach((button) => {
     button.addEventListener("click", function (event) {
       event.preventDefault();
       answerId = button.getAttribute("answerId");
-      question["userAnswer"] = answerId;
+      question[i]["userAnswer"] = answerId;
       console.log(answerId + " submit");
-      if (question["userAnswer"] === question["correctAnswer"]) {
+      if (question[i]["userAnswer"] === question[i]["correctAnswer"]) {
         console.log("right answer");
+        clearQuestion();
+        i++;
+        nextQuestion(questionAr);
       } else {
         console.log("wrong answer");
+        clearQuestion();
+        i++;
+        nextQuestion(questionAr);
       }
-      clearQuestion();
+      console.log(i);
     });
   });
 }
 
-displayQuestion(question1);
+nextQuestion(questionAr);
