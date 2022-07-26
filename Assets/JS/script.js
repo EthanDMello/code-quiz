@@ -64,32 +64,40 @@ function clearQuestion() {
   questionArea.innerHTML = " ";
 }
 
-var i = 0;
-function nextQuestion(question) {
-  console.log(i);
+function nextQuestion(question, i) {
   displayBlock(question[i]);
+  // find buttons and assign the event listeners for being clicked
   let buttons = document.querySelectorAll("button");
-  console.log(buttons);
   buttons.forEach((button) => {
     button.addEventListener("click", function (event) {
       event.preventDefault();
+      // check if answer is right or wrong
       answerId = button.getAttribute("answerId");
       question[i]["userAnswer"] = answerId;
-      console.log(answerId + " submit");
       if (question[i]["userAnswer"] === question[i]["correctAnswer"]) {
         console.log("right answer");
-        clearQuestion();
-        i++;
-        nextQuestion(questionAr);
+        // display right answer
       } else {
         console.log("wrong answer");
-        clearQuestion();
-        i++;
-        nextQuestion(questionAr);
+        // display wrong answer
+        // add to wrong answer total
       }
-      console.log(i);
+      // reset and iterate through questions
+      i++;
+      clearQuestion();
+      if (i < questionAr.length) {
+        nextQuestion(questionAr, i);
+      }
     });
   });
 }
 
-nextQuestion(questionAr);
+function startGame() {
+  // start game
+  let wrongAnswers = 0;
+  let i = 0;
+  console.log(i);
+  nextQuestion(questionAr, i);
+}
+
+startGame();
