@@ -1,4 +1,5 @@
-Complete homework portfolio project with HTML and CSS files to fit the assessment criteria.
+Complete homework portfolio project with HTML, CSS and Javascript files to fit the assessment criteria.
+A quiz game that asks question about javascript code.
 
 Made by Ethan D'Mello
 Github: https://github.com/EthanDMello
