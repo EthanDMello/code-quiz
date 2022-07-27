@@ -47,7 +47,6 @@ function displayBlock(questions) {
   let el = document.createElement("section");
   //   add question
   el.textContent = questions.question;
-  // console.log("QEUSTION SELECTOR", questions.question);
   questionArea.appendChild(el);
   //   find answers
   const keys = Object.keys(questions);
@@ -89,6 +88,8 @@ function nextQuestion(question) {
         // display wrong answer
         // add to wrong answer total
         wrongAnswers++;
+        // take time of timer
+        timeLeft = timeLeft - 5;
         console.log(wrongAnswers);
       }
       // reset and iterate through questions
@@ -99,25 +100,14 @@ function nextQuestion(question) {
       } else if (wrongAnswers >= 3) {
         // end game and record scores
         endGame();
-
         playAgain();
       } else {
         endGame();
-        seeHighScores();
         playAgain();
       }
     });
   });
 }
-
-let wrongAnswers = 0;
-let rightAnswers = 0;
-let questionCount = 0;
-localStorage.setItem("wins", "0");
-localStorage.setItem("loses", "0");
-let highScoresAr = [];
-startButton = document.querySelector(".startBtn");
-var timeLeft = 10;
 
 function playAgain() {
   wrongAnswers = 0;
@@ -127,21 +117,25 @@ function playAgain() {
     startGame();
     countDown();
   } else {
+    clearInterval(timer);
+    timerNumber.textContent = "";
     startButton.hidden = false;
     console.log("not played again");
   }
 }
 
 var timer = null;
+var timeLeft = 0;
 function countDown() {
   clearInterval(timer);
-  var timeLeft = 60;
+  timeLeft = 60;
   timer = setInterval(() => {
     if (timeLeft !== -1) {
       timerNumber.textContent = timeLeft;
       timeLeft--;
     } else {
       clearInterval(timer);
+      timerNumber.textContent = "";
       // end game
       endGame();
       playAgain();
@@ -156,23 +150,33 @@ function recordHighScore() {
 }
 
 function seeHighScores() {
-  highScoresAr = JSON.parse(localStorage.getItem("highScores"));
-  console.log(highScoresAr);
-  highScoresAr.forEach((index) => {
-    console.log(index);
-    let name = index[0];
-    let score = index[1];
-
-    highScoreArea.textContent = name + " " + score;
-  });
+  if (highScoreArea.innerHTML != "") {
+    highScoreArea.innerHTML = "";
+    highScoreButton.textContent = "See High Scores";
+  } else {
+    highScoresAr = JSON.parse(localStorage.getItem("highScores"));
+    if (highScoresAr.length != 0) {
+      highScoresAr.forEach((index) => {
+        console.log(index);
+        let name = index[0];
+        let score = index[1];
+        newScore = document.createElement("li");
+        newScore.textContent = name + " " + score;
+        highScoreArea.appendChild(newScore);
+      });
+      highScoreButton.textContent = "Hide High Scores";
+    }
+  }
 }
 function endGame() {
-  // clear questions, record name for high score, play again?
+  // clear questions, record name for high score
   clearQuestion();
   recordHighScore();
+  highScoreButton.style.display = "block";
 }
 
 function startGame() {
+  highScoreButton.style.display = "none";
   // start timer
   countDown();
   // start game
@@ -181,4 +185,16 @@ function startGame() {
   startButton.setAttribute("hidden", "true");
 }
 
+let wrongAnswers = 0;
+let rightAnswers = 0;
+let questionCount = 0;
+let highScoresAr = [];
+startButton = document.querySelector(".startBtn");
+highScoreButton = document.querySelector(".highScoreBtn");
+
+if (localStorage.getItem("highScores") === null) {
+  localStorage.setItem("highScores", "");
+}
+
 startButton.addEventListener("click", startGame);
+highScoreButton.addEventListener("click", seeHighScores);
