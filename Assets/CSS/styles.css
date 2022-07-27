@@ -1,3 +1,4 @@
+/* root colours */
 :root {
   --blue: #172444;
   --rust: #faa71b;
@@ -10,16 +11,12 @@
   padding: 0rem;
   font-family: "Poppins", sans-serif;
 }
-/* section {
-  min-height: 50px;
-} */
 
-/* body */
+/* element selectors */
 body {
   background-color: var(--blue);
 }
 
-/* Header */
 header {
   display: flex;
   text-align: center;
@@ -42,6 +39,7 @@ header h1 {
   margin: 0.625rem;
 }
 
+/* class selectors */
 .quizArea {
   padding: 1.25rem;
   margin: 1.875rem;
