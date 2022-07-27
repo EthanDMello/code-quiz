@@ -1,6 +1,7 @@
 const questionArea = document.querySelector(".questionForm");
 const bodyArea = document.querySelector("body");
 const timerNumber = document.querySelector(".timer");
+const highScoreArea = document.querySelector(".highScores");
 
 const question1 = {
   question:
@@ -115,8 +116,8 @@ let questionCount = 0;
 localStorage.setItem("wins", "0");
 localStorage.setItem("loses", "0");
 let highScoresAr = [];
-let timer = 60;
 startButton = document.querySelector(".startBtn");
+var timeLeft = 10;
 
 function playAgain() {
   wrongAnswers = 0;
@@ -131,9 +132,11 @@ function playAgain() {
   }
 }
 
+var timer = null;
 function countDown() {
-  timeLeft = 10;
-  timer = setInterval(function () {
+  clearInterval(timer);
+  var timeLeft = 60;
+  timer = setInterval(() => {
     if (timeLeft !== -1) {
       timerNumber.textContent = timeLeft;
       timeLeft--;
@@ -148,14 +151,20 @@ function countDown() {
 
 function recordHighScore() {
   initials = prompt("Please enter your initials");
-  highScoresAr.push(initials, rightAnswers);
+  highScoresAr.push([initials, rightAnswers]);
   localStorage.setItem("highScores", JSON.stringify(highScoresAr));
 }
 
 function seeHighScores() {
   highScoresAr = JSON.parse(localStorage.getItem("highScores"));
   console.log(highScoresAr);
-  // highScoresAr.forEach();
+  highScoresAr.forEach((index) => {
+    console.log(index);
+    let name = index[0];
+    let score = index[1];
+
+    highScoreArea.textContent = name + " " + score;
+  });
 }
 function endGame() {
   // clear questions, record name for high score, play again?
