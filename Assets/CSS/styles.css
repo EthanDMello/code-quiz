@@ -100,3 +100,8 @@ button.highScoreBtn {
   align-self: center;
   font-size: 1.4rem;
 }
+
+.rightWrong {
+  font-size: 3rem;
+  align-self: center;
+}
