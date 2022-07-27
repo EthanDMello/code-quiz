@@ -1,5 +1,6 @@
 const questionArea = document.querySelector(".questionForm");
 const bodyArea = document.querySelector("body");
+const timerNumber = document.querySelector(".timer");
 
 const question1 = {
   question:
@@ -80,6 +81,7 @@ function nextQuestion(question) {
         question[questionCount]["correctAnswer"]
       ) {
         console.log("right answer");
+        rightAnswers++;
         // display right answer
       } else {
         console.log("wrong answer");
@@ -95,14 +97,12 @@ function nextQuestion(question) {
         nextQuestion(questionAr);
       } else if (wrongAnswers >= 3) {
         // end game and record scores
-        let loses = localStorage.getItem("loses");
-        loses++;
-        localStorage.setItem("loses", loses);
+        endGame();
+
         playAgain();
       } else {
-        let wins = localStorage.getItem("wins");
-        wins++;
-        localStorage.setItem("wins", wins);
+        endGame();
+        seeHighScores();
         playAgain();
       }
     });
@@ -110,24 +110,62 @@ function nextQuestion(question) {
 }
 
 let wrongAnswers = 0;
+let rightAnswers = 0;
 let questionCount = 0;
 localStorage.setItem("wins", "0");
 localStorage.setItem("loses", "0");
+let highScoresAr = [];
+let timer = 60;
 startButton = document.querySelector(".startBtn");
 
 function playAgain() {
   wrongAnswers = 0;
+  rightAnswers = 0;
   questionCount = 0;
   if (confirm("do you want to play again?")) {
     startGame();
+    countDown();
   } else {
-    // display scores
     startButton.hidden = false;
     console.log("not played again");
   }
 }
 
+function countDown() {
+  timeLeft = 10;
+  timer = setInterval(function () {
+    if (timeLeft !== -1) {
+      timerNumber.textContent = timeLeft;
+      timeLeft--;
+    } else {
+      clearInterval(timer);
+      // end game
+      endGame();
+      playAgain();
+    }
+  }, 1000);
+}
+
+function recordHighScore() {
+  initials = prompt("Please enter your initials");
+  highScoresAr.push(initials, rightAnswers);
+  localStorage.setItem("highScores", JSON.stringify(highScoresAr));
+}
+
+function seeHighScores() {
+  highScoresAr = JSON.parse(localStorage.getItem("highScores"));
+  console.log(highScoresAr);
+  // highScoresAr.forEach();
+}
+function endGame() {
+  // clear questions, record name for high score, play again?
+  clearQuestion();
+  recordHighScore();
+}
+
 function startGame() {
+  // start timer
+  countDown();
   // start game
   nextQuestion(questionAr);
   // hide button
