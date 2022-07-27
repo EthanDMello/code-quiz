@@ -86,13 +86,14 @@ function nextQuestion(question) {
         console.log("right answer");
         rightAnswers++;
         // display right answer
+        rightWrong((x = true));
       } else {
         console.log("wrong answer");
-        // display wrong answer
         // add to wrong answer total
         wrongAnswers++;
-        // minus time off timer
+        // minus time off timer and display wrong
         timeLeft = timeLeft - 5;
+        rightWrong((x = false));
         console.log(wrongAnswers);
       }
       // reset and iterate through questions
@@ -100,7 +101,7 @@ function nextQuestion(question) {
       clearQuestion();
       if (questionCount < questionAr.length) {
         nextQuestion(questionAr);
-      } else if (wrongAnswers >= 3) {
+      } else if (wrongAnswers >= 3 || timeLeft < -1) {
         // end game and record scores
         endGame();
         playAgain();
@@ -143,7 +144,7 @@ function countDown() {
 }
 
 function recordHighScore() {
-  initials = prompt("Please enter your initials");
+  initials = prompt("Game over!, please enter your initials");
   highScoresAr.push([initials, rightAnswers]);
   localStorage.setItem("highScores", JSON.stringify(highScoresAr));
   appendScore();
@@ -176,10 +177,21 @@ function appendScore() {
     highScoreButton.textContent = "Hide High Scores";
   }
 }
+
+function rightWrong(x) {
+  rightWrongArea.textContent = " ";
+  if (x) {
+    rightWrongArea.textContent = "Correct!";
+  } else {
+    rightWrongArea.textContent = "Wrong! -5 seconds";
+  }
+}
+
 function endGame() {
   // clear questions, record name for high score
   clearQuestion();
   recordHighScore();
+  rightWrongArea.textContent = "";
   highScoreButton.hidden = false;
 }
 
@@ -198,6 +210,7 @@ const questionArea = document.querySelector(".questionForm");
 const bodyArea = document.querySelector("body");
 const timerNumber = document.querySelector(".timer");
 const highScoreArea = document.querySelector(".highScores");
+const rightWrongArea = document.querySelector(".rightWrong");
 let wrongAnswers = 0;
 let rightAnswers = 0;
 let questionCount = 0;
