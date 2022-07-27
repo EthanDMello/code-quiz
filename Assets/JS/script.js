@@ -169,7 +169,7 @@ function appendScore() {
       let name = index[0];
       let score = index[1];
       newScore = document.createElement("li");
-      newScore.textContent = name + " " + score;
+      newScore.textContent = name + "      " + score;
       highScoreArea.appendChild(newScore);
     });
     highScoreArea.style.backgroundColor = "#faa71b";
@@ -201,7 +201,7 @@ const highScoreArea = document.querySelector(".highScores");
 let wrongAnswers = 0;
 let rightAnswers = 0;
 let questionCount = 0;
-let highScoresAr = [["Player: ", "Score: "]];
+let highScoresAr = [["Player:    ", "Score: "]];
 startButton = document.querySelector(".startBtn");
 highScoreButton = document.querySelector(".highScoreBtn");
 
