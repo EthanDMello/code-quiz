@@ -1,8 +1,4 @@
-const questionArea = document.querySelector(".questionForm");
-const bodyArea = document.querySelector("body");
-const timerNumber = document.querySelector(".timer");
-const highScoreArea = document.querySelector(".highScores");
-
+// Question object
 const question1 = {
   question:
     "Which built-in method returns the calling string value converted to upper case?",
@@ -14,34 +10,39 @@ const question1 = {
 };
 
 const question2 = {
-  question: "Question 2",
-  answer1: "answer 1 for question 2()",
-  answer2: "answer 2 for q 3()",
-  answer3: "None of the above",
+  question: "Which built-in method returns the length of the string?",
+  answer1: "index()",
+  answer2: "size()",
+  answer3: "length()",
+  answer4: "None of the above",
   userAnswer: "",
-  correctAnswer: "answer1",
+  correctAnswer: "answer3",
 };
 
 const question3 = {
-  question: "Question 3",
-  answer1: "toUpperCase()",
-  answer2: "toUpper()",
-  answer3: "None answer 3 for q 3 the above",
+  question:
+    "Are all user-defined objects and built-in objects are descendants of an object called Object?",
+  answer1: "True",
+  answer2: "False",
   userAnswer: "",
   correctAnswer: "answer1",
 };
 
 const question4 = {
-  question: "question 4",
-  answer1: "toUpperCase()",
-  answer2: "toUpper()",
-  answer3: "None number 4 the above",
+  question:
+    "Which of the following function of Boolean object returns a string containing the source of the Boolean object?",
+  answer1: "toString()",
+  answer2: "valueOf()",
+  answer3: "toSource()",
+  answer4: "None of the above",
   userAnswer: "",
   correctAnswer: "answer1",
 };
 
+// Question array
 const questionAr = [question1, question2, question3, question4];
 
+// Main functions
 function displayBlock(questions) {
   // take object to display and add to HTML
   let el = document.createElement("section");
@@ -57,19 +58,21 @@ function displayBlock(questions) {
       answerEl.textContent = questions[key];
       answerEl.setAttribute("type", "submit");
       answerEl.setAttribute("answerId", key);
+      answerEl.setAttribute("class", "answerButton");
       questionArea.appendChild(answerEl);
     }
   });
 }
 
 function clearQuestion() {
+  // clears question area in the HTML
   questionArea.innerHTML = " ";
 }
 
 function nextQuestion(question) {
   displayBlock(question[questionCount]);
   // find buttons and assign the event listeners for being clicked
-  let buttons = document.querySelectorAll("button");
+  let buttons = document.querySelectorAll(".answerButton");
   buttons.forEach((button) => {
     button.addEventListener("click", function (event) {
       event.preventDefault();
@@ -110,18 +113,14 @@ function nextQuestion(question) {
 }
 
 function playAgain() {
+  // reset variables
   wrongAnswers = 0;
   rightAnswers = 0;
   questionCount = 0;
-  if (confirm("do you want to play again?")) {
-    startGame();
-    countDown();
-  } else {
-    clearInterval(timer);
-    timerNumber.textContent = "";
-    startButton.hidden = false;
-    console.log("not played again");
-  }
+  // reset buttons
+  clearInterval(timer);
+  timerNumber.textContent = "";
+  startButton.hidden = false;
 }
 
 var timer = null;
@@ -147,6 +146,7 @@ function recordHighScore() {
   initials = prompt("Please enter your initials");
   highScoresAr.push([initials, rightAnswers]);
   localStorage.setItem("highScores", JSON.stringify(highScoresAr));
+  appendScore();
 }
 
 function seeHighScores() {
@@ -154,29 +154,34 @@ function seeHighScores() {
     highScoreArea.innerHTML = "";
     highScoreButton.textContent = "See High Scores";
   } else {
-    highScoresAr = JSON.parse(localStorage.getItem("highScores"));
-    if (highScoresAr.length != 0) {
-      highScoresAr.forEach((index) => {
-        console.log(index);
-        let name = index[0];
-        let score = index[1];
-        newScore = document.createElement("li");
-        newScore.textContent = name + " " + score;
-        highScoreArea.appendChild(newScore);
-      });
-      highScoreButton.textContent = "Hide High Scores";
-    }
+    appendScore();
+  }
+}
+
+function appendScore() {
+  highScoreArea.innerHTML = "";
+  highScoresAr = JSON.parse(localStorage.getItem("highScores"));
+  if (highScoresAr.length != 0) {
+    highScoresAr.forEach((index) => {
+      console.log(index);
+      let name = index[0];
+      let score = index[1];
+      newScore = document.createElement("li");
+      newScore.textContent = name + " " + score;
+      highScoreArea.appendChild(newScore);
+    });
+    highScoreButton.textContent = "Hide High Scores";
   }
 }
 function endGame() {
   // clear questions, record name for high score
   clearQuestion();
   recordHighScore();
-  highScoreButton.style.display = "block";
+  highScoreButton.hidden = false;
 }
 
 function startGame() {
-  highScoreButton.style.display = "none";
+  highScoreButton.hidden = true;
   // start timer
   countDown();
   // start game
@@ -185,6 +190,11 @@ function startGame() {
   startButton.setAttribute("hidden", "true");
 }
 
+// Initialise global variables and local storage
+const questionArea = document.querySelector(".questionForm");
+const bodyArea = document.querySelector("body");
+const timerNumber = document.querySelector(".timer");
+const highScoreArea = document.querySelector(".highScores");
 let wrongAnswers = 0;
 let rightAnswers = 0;
 let questionCount = 0;
@@ -196,5 +206,6 @@ if (localStorage.getItem("highScores") === null) {
   localStorage.setItem("highScores", "");
 }
 
+// main button event listeners
 startButton.addEventListener("click", startGame);
 highScoreButton.addEventListener("click", seeHighScores);
