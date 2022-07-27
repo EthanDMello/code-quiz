@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./Assets/CSS/styles.css" />
     <title>Code Quiz</title>
   </head>
@@ -11,13 +17,15 @@
     <header>
       <h1>Code Quiz</h1>
     </header>
-    <section class="timer"></section>
-    <section class="question">
-      <form class="questionForm" action=""></form>
+    <section class="quizArea">
+      <section class="timer"></section>
+      <section class="question">
+        <form class="questionForm" action=""></form>
+      </section>
+      <section class="correction"></section>
+      <button class="startBtn">Start Game</button>
+      <button class="highScoreBtn">See High Scores</button>
     </section>
-    <section class="correction"></section>
-    <button class="startBtn">Start Game</button>
-    <button class="highScoreBtn">See High Scores</button>
     <ul class="highScores"></ul>
     <script src="./Assets/JS/script.js"></script>
   </body>
