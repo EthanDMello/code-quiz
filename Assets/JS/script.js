@@ -91,7 +91,7 @@ function nextQuestion(question) {
         // display wrong answer
         // add to wrong answer total
         wrongAnswers++;
-        // take time of timer
+        // minus time off timer
         timeLeft = timeLeft - 5;
         console.log(wrongAnswers);
       }
@@ -129,7 +129,7 @@ function countDown() {
   clearInterval(timer);
   timeLeft = 60;
   timer = setInterval(() => {
-    if (timeLeft !== -1) {
+    if (timeLeft > -1) {
       timerNumber.textContent = timeLeft;
       timeLeft--;
     } else {
@@ -152,6 +152,7 @@ function recordHighScore() {
 function seeHighScores() {
   if (highScoreArea.innerHTML != "") {
     highScoreArea.innerHTML = "";
+    highScoreArea.style.backgroundColor = "#172444";
     highScoreButton.textContent = "See High Scores";
   } else {
     appendScore();
@@ -160,7 +161,8 @@ function seeHighScores() {
 
 function appendScore() {
   highScoreArea.innerHTML = "";
-  highScoresAr = JSON.parse(localStorage.getItem("highScores"));
+  if (localStorage.getItem("highScores") === null)
+    highScoresAr = JSON.parse(localStorage.getItem("highScores"));
   if (highScoresAr.length != 0) {
     highScoresAr.forEach((index) => {
       console.log(index);
@@ -170,6 +172,7 @@ function appendScore() {
       newScore.textContent = name + " " + score;
       highScoreArea.appendChild(newScore);
     });
+    highScoreArea.style.backgroundColor = "#faa71b";
     highScoreButton.textContent = "Hide High Scores";
   }
 }
@@ -198,11 +201,13 @@ const highScoreArea = document.querySelector(".highScores");
 let wrongAnswers = 0;
 let rightAnswers = 0;
 let questionCount = 0;
-let highScoresAr = [];
+let highScoresAr = [["Player: ", "Score: "]];
 startButton = document.querySelector(".startBtn");
 highScoreButton = document.querySelector(".highScoreBtn");
 
+// intialise empty local storage if it doesn't already exist
 if (localStorage.getItem("highScores") === null) {
+  console.log("create local storage");
   localStorage.setItem("highScores", "");
 }
 

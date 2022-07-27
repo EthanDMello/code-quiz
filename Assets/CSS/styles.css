@@ -6,8 +6,8 @@
 }
 
 * {
-  margin: 0px;
-  padding: 0px;
+  margin: 0rem;
+  padding: 0rem;
   font-family: "Poppins", sans-serif;
 }
 /* section {
@@ -17,8 +17,8 @@
 /* body */
 body {
   background-color: var(--blue);
-  display: block;
 }
+
 /* Header */
 header {
   display: flex;
@@ -28,34 +28,74 @@ header {
   justify-content: center;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
 header h1 {
   background-color: var(--rust);
   border-radius: 1rem;
   width: fit-content;
   align-self: center;
-  margin: 10px;
+  margin: 0.625rem;
 }
 
 .quizArea {
-  padding: 20px;
-  margin: 30px;
-  margin-top: 10px;
-  width: 600px;
-  height: 800px;
+  padding: 1.25rem;
+  margin: 1.875rem;
+  margin-top: 0.625rem;
+  width: 37.5rem;
+  height: 40rem;
   display: flex;
-  justify-content: center;
-  align-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-self: center;
   background-color: var(--rust);
+  border-radius: 1rem;
 }
 
-button.startBtn {
+.timer {
+  height: 3rem;
+  font-size: 3rem;
+  padding: 0.8rem;
+  align-self: flex-end;
+}
+
+.question {
+  height: 25rem;
+  font-size: 1.5rem;
+}
+
+button.answerButton {
+  font-size: 1.4rem;
+  margin: 1rem;
+}
+.mainButtons {
   display: flex;
-  height: 30px;
+  width: 25rem;
+  justify-content: space-between;
+  align-self: center;
+}
+
+button.startBtn,
+button.highScoreBtn {
+  height: 3rem;
   border-radius: 0.3rem;
   border-width: 0.1rem;
   font-size: 1.4rem;
   text-align: center;
+  padding: 0.5rem;
 }
-button.highScoreBtn {
-  text-align: center;
+
+.highScores {
+  background-color: var(--blue);
+  padding: 1.25rem;
+  margin: 1.875rem;
+  margin-top: -1.25rem;
+  width: 37.5rem;
+  border-radius: 1rem;
+  list-style: none;
+  align-self: center;
 }
